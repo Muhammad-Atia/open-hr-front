@@ -1,0 +1,406 @@
+{
+  "employee_gender": [
+    {
+      "label": "Male",
+      "value": "male"
+    },
+    {
+      "label": "Female",
+      "value": "female"
+    }
+  ],
+  "employee_blood_group": [
+    {
+      "label": "A+",
+      "value": "a+"
+    },
+    {
+      "label": "A-",
+      "value": "a-"
+    },
+    {
+      "label": "B+",
+      "value": "b+"
+    },
+    {
+      "label": "B-",
+      "value": "b-"
+    },
+    {
+      "label": "O+",
+      "value": "o+"
+    },
+    {
+      "label": "O-",
+      "value": "o-"
+    },
+    {
+      "label": "AB+",
+      "value": "ab+"
+    },
+    {
+      "label": "AB-",
+      "value": "ab-"
+    }
+  ],
+  "employee_marital_status": [
+    {
+      "label": "Married",
+      "value": "married"
+    },
+    {
+      "label": "Unmarried",
+      "value": "unmarried"
+    },
+    {
+      "label": "Divorced",
+      "value": "divorced"
+    },
+    {
+      "label": "Widowed",
+      "value": "widowed"
+    }
+  ],
+  "employee_status": [
+    {
+      "label": "Pending",
+      "value": "pending"
+    },
+    {
+      "label": "Active",
+      "value": "active"
+    },
+    {
+      "label": "Archived",
+      "value": "archived"
+    }
+  ],
+  "employee_role": [
+    {
+      "label": "User",
+      "value": "user"
+    },
+    {
+      "label": "Moderator",
+      "value": "moderator"
+    },
+    {
+      "label": "Admin",
+      "value": "admin"
+    }
+  ],
+  "employee_department": [
+    {
+      "label": "Development",
+      "value": "development"
+    },
+    {
+      "label": "Design",
+      "value": "design"
+    },
+    {
+      "label": "Marketing",
+      "value": "marketing"
+    },
+    {
+      "label": "Admin",
+      "value": "admin"
+    },
+    {
+      "label": "HR & Finance",
+      "value": "hr_finance"
+    },
+    {
+      "label": "Production",
+      "value": "production"
+    },
+    {
+      "label": "Other",
+      "value": "other"
+    }
+  ],
+  "employee_job_type": [
+    {
+      "label": "Full Time",
+      "value": "full_time"
+    },
+    {
+      "label": "Part Time",
+      "value": "part_time"
+    },
+    {
+      "label": "Remote",
+      "value": "remote"
+    },
+    {
+      "label": "Contractual",
+      "value": "contractual"
+    }
+  ],
+  "employee_achievement_type": [
+    {
+      "label": "Award",
+      "value": "award"
+    },
+    {
+      "label": "Recognition",
+      "value": "recognition"
+    },
+    {
+      "label": "Certificate",
+      "value": "certificate"
+    },
+    {
+      "label": "Course",
+      "value": "course"
+    },
+    {
+      "label": "Training",
+      "value": "training"
+    },
+    {
+      "label": "Other",
+      "value": "other"
+    }
+  ],
+  "currency": [
+    {
+      "label": "BDT",
+      "value": "bdt"
+    },
+    {
+      "label": "USD",
+      "value": "usd"
+    }
+  ],
+  "billing": [
+    {
+      "label": "Monthly",
+      "value": "monthly"
+    },
+    {
+      "label": "Yearly",
+      "value": "yearly"
+    },
+    {
+      "label": "One Time",
+      "value": "onetime"
+    }
+  ],
+  "asset_type": [
+    {
+      "label": "Macbook",
+      "value": "macbook"
+    },
+    {
+      "label": "Mac Mini",
+      "value": "macmini"
+    },
+    {
+      "label": "iMac",
+      "value": "imac"
+    },
+    {
+      "label": "Laptop",
+      "value": "laptop"
+    },
+    {
+      "label": "Desktop",
+      "value": "desktop"
+    },
+    {
+      "label": "Mobile",
+      "value": "mobile"
+    },
+    {
+      "label": "Keyboard",
+      "value": "keyboard"
+    },
+    {
+      "label": "Mouse",
+      "value": "mouse"
+    },
+    {
+      "label": "Monitor",
+      "value": "monitor"
+    },
+    {
+      "label": "Headset",
+      "value": "headset"
+    },
+    {
+      "label": "Printer",
+      "value": "printer"
+    },
+    {
+      "label": "Router",
+      "value": "router"
+    },
+    {
+      "label": "Other",
+      "value": "other"
+    }
+  ],
+  "asset_status": [
+    {
+      "label": "Engaged",
+      "value": "engaged"
+    },
+    {
+      "label": "Archived",
+      "value": "archived"
+    },
+    {
+      "label": "Lost",
+      "value": "lost"
+    },
+    {
+      "label": "Damaged",
+      "value": "damaged"
+    },
+    {
+      "label": "Sold",
+      "value": "sold"
+    }
+  ],
+  "asset_log_type": [
+    {
+      "label": "Handover",
+      "value": "handover"
+    },
+    {
+      "label": "Repair",
+      "value": "repair"
+    },
+    {
+      "label": "Takeover",
+      "value": "takeover"
+    },
+    {
+      "label": "Other",
+      "value": "other"
+    }
+  ],
+  "leave_type": [
+    {
+      "label": "Casual",
+      "value": "casual"
+    },
+    {
+      "label": "Earned",
+      "value": "earned"
+    },
+    {
+      "label": "Sick",
+      "value": "sick"
+    },
+    {
+      "label": "Without Pay",
+      "value": "without_pay"
+    }
+  ],
+  "education_result_type": [
+    {
+      "label": "GPA",
+      "value": "gpa"
+    },
+    {
+      "label": "CGPA",
+      "value": "cgpa"
+    },
+    {
+      "label": "Percentage",
+      "value": "percentage"
+    }
+  ],
+  "menu_access": [
+    {
+      "label": "Admin",
+      "value": "admin"
+    },
+    {
+      "label": "Moderator",
+      "value": "moderator"
+    },
+    {
+      "label": "User",
+      "value": "user"
+    }
+  ],
+  "weekend_days": [
+    {
+      "label": "Saturday",
+      "value": "Saturday"
+    },
+    {
+      "label": "Sunday",
+      "value": "Sunday"
+    },
+    {
+      "label": "Monday",
+      "value": "Monday"
+    },
+    {
+      "label": "Tuesday",
+      "value": "Tuesday"
+    },
+    {
+      "label": "Wednesday",
+      "value": "Wednesday"
+    },
+    {
+      "label": "Thursday",
+      "value": "Thursday"
+    },
+    {
+      "label": "Friday",
+      "value": "Friday"
+    }
+  ],
+  "conditional_weekend_pattern": [
+    {
+      "label": "1",
+      "value": "1"
+    },
+    {
+      "label": "2",
+      "value": "2"
+    },
+    {
+      "label": "3",
+      "value": "3"
+    },
+    {
+      "label": "4",
+      "value": "4"
+    }
+  ],
+  "payroll_status": [
+    {
+      "label": "Active",
+      "value": "active"
+    },
+    {
+      "label": "Archived",
+      "value": "archived"
+    }
+  ],
+  "payroll_bonus_type": [
+    {
+      "label": "Festival",
+      "value": "festive"
+    },
+    {
+      "label": "Performance",
+      "value": "performance"
+    },
+    {
+      "label": "Project",
+      "value": "project"
+    },
+    {
+      "label": "Other",
+      "value": "other"
+    }
+  ]
+}

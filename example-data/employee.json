@@ -1,0 +1,7 @@
+{
+  "id": "ADMIN2025001",
+  "name": "Admin",
+  "work_email": "admin@example.com",
+  "status": "active",
+  "role": "admin"
+}

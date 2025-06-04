@@ -1,0 +1,100 @@
+{
+  "app_name": "Open HR",
+  "app_url": "https://open-hr.com",
+  "favicon_url": "https://zeon.studio/images/brands/logo_mark_dark.png",
+  "logo_url": "https://zeon.studio/images/brands/full_logo_gradient_dark.png",
+  "logo_width": 165,
+  "logo_height": 22,
+  "company_name": "Zeon Studio",
+  "company_website": "https://zeon.studio",
+  "communication_platform": "Discord",
+  "communication_platform_url": "https://discord.com/channels/@me/",
+  "modules": [
+    {
+      "name": "tool",
+      "enable": true
+    },
+    {
+      "name": "course",
+      "enable": true
+    },
+    {
+      "name": "asset",
+      "enable": true
+    },
+    {
+      "name": "leave",
+      "enable": true
+    },
+    {
+      "name": "calendar",
+      "enable": true
+    },
+    {
+      "name": "employee-bank",
+      "enable": true
+    },
+    {
+      "name": "payroll",
+      "enable": true
+    },
+    {
+      "name": "employee-contact",
+      "enable": true
+    },
+    {
+      "name": "employee-document",
+      "enable": true
+    },
+    {
+      "name": "employee-lifecycle",
+      "enable": true
+    },
+    {
+      "name": "employee-education",
+      "enable": true
+    },
+    {
+      "name": "employee-achievement",
+      "enable": true
+    }
+  ],
+  "payroll": {
+    "basic": "60%",
+    "house_rent": "50%",
+    "medical": "8%",
+    "conveyance": "8%"
+  },
+  "weekends": ["Friday"],
+  "conditional_weekends": [],
+  "leaves": [
+    {
+      "name": "casual",
+      "days": 10
+    },
+    {
+      "name": "earned",
+      "days": 15
+    },
+    {
+      "name": "sick",
+      "days": 15
+    },
+    {
+      "name": "without_pay",
+      "days": 30
+    }
+  ],
+  "onboarding_tasks": [
+    {
+      "name": "Add Fingerprint",
+      "assigned_to": "TFADM2024003"
+    }
+  ],
+  "offboarding_tasks": [
+    {
+      "name": "Remove Fingerprint",
+      "assigned_to": "TFADM2024003"
+    }
+  ]
+}

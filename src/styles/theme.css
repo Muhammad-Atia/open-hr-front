@@ -1,0 +1,28 @@
+/* define font family into layout.tsx */
+
+/* font size and radius */
+:root {
+  --font-base: 16px;
+  --font-scale: 1.2;
+  --radius: 0.3rem;
+}
+
+/* default colors */
+:root {
+  --body-color: #ffffff;
+  --primary-color: #000000;
+  --border-color: #e6e6e6;
+  --light-color: #f7f8fc;
+  --dark-color: #111827;
+  --accent-color: #1628e3;
+  --muted-color: #d1d5db;
+  --danger-color: #e21d48;
+  --success-color: #1ea44b;
+  --warning-color: #e7b718;
+
+  --text-default-color: #1d283a;
+  --text-light-color: #6b7280;
+  --text-dark-color: #0f1324;
+  --text-muted-color: #595f78;
+  --text-white-color: #ffffff;
+}
