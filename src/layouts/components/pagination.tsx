@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next"; // أضف هذا السطر
 
 const Pagination = ({
   total,
@@ -18,9 +19,9 @@ const Pagination = ({
   total: number;
   className?: string;
 }) => {
+  const { t } = useTranslation(); // أضف هذا السطر
   const { limit } = useAppSelector((state) => state.filter);
-  // Total number of items in your list
-  const totalPages = Math.ceil(total / limit);
+  const totalPages = total && limit ? Math.max(1, Math.ceil(total / limit)) : 1;
   const searchParams = useSearchParams();
   const page = Number(searchParams?.get("page")) || 1;
   const [inputPage, setInputPage] = useState(page);
@@ -36,7 +37,7 @@ const Pagination = ({
   return (
     <div className={`flex justify-end items-center ${className}`}>
       <p className="mr-4">
-        Page {page ? page : 1} of {totalPages}
+        {t("Page")} {page ? page : 1} {t("of")} {totalPages}
       </p>
       <div>
         <ul className="flex space-x-2">
@@ -71,6 +72,7 @@ const Pagination = ({
                 onChange={(e) => setInputPage(Number(e.target.value))}
                 autoComplete="off"
                 className="w-9 text-center border border-border border-border rounded-sm bg-white h-9 p-0 focus:outline-none focus:ring-0 focus:border-dark"
+                aria-label={t("Go to page")}
               />
             </form>{" "}
           </li>

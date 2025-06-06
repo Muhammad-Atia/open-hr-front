@@ -212,7 +212,7 @@ export default function EmployeeSingle() {
             </div>
 
             <div className="-translate-y-2 lg:-translate-y-6">
-              <div className="mt-auto xl:hidden">
+              <div className="mt-auto lg:hidden">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
@@ -256,7 +256,7 @@ export default function EmployeeSingle() {
                 </DropdownMenu>
               </div>
 
-              <TabsList className="hidden xl:flex h-auto 2xl:gap-x-4 space-x-0 space-y-0 bg-transparent border-none justify-start items-start shadow-none w-full pb-0 self-end justify-self-end -mt-6 max-w-[750px] 2xl:max-w-full overflow-x-auto rounded-none">
+              <TabsList className="hidden lg:flex h-auto 2xl:gap-x-4 space-x-0 space-y-0 bg-transparent border-none justify-start items-start shadow-none w-full pb-0 self-end justify-self-end -mt-6 max-w-[750px] 2xl:max-w-full overflow-x-auto rounded-none no-scrollbar">
                 {filteredTabs.map((tab, index) => (
                   <TabsTrigger
                     value={tab.value}
@@ -284,7 +284,7 @@ export default function EmployeeSingle() {
         </div>
 
         <div className="gap-5 px-4 pb-4 mt-6 lg:mt-8 xl:mt-16 flex">
-          <div className="space-y-5 xl:basis-[210px] hidden xl:block xl:pl-8">
+          <div className="space-y-5 xl:basis-[210px] hidden lg:block xl:pl-8">
             <div className="xl:max-w-[210px]">
               <h6 className="text-base font-semibold mb-4">Vitals</h6>
               <ul className="list-none space-y-4">

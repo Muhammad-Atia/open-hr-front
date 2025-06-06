@@ -26,8 +26,6 @@ const initialState: TSettingState["result"] = {
   leaves: [],
   onboarding_tasks: [],
   offboarding_tasks: [],
-  rtl: true,
-  language: "ar",
 };
 
 export const settingSlice = createSlice({
@@ -57,4 +55,4 @@ export const settingSlice = createSlice({
   },
 });
 
-export const { updateSetting  } = settingSlice.actions;
+export const { updateSetting } = settingSlice.actions;

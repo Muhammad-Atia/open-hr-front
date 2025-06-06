@@ -41,7 +41,9 @@ export type TEmployeePasswordUpdate = {
 };
 
 export type TEmployeeCreate = {
+  name: string;
   personal_email: string;
+  work_email: string;
   department:
     | "development"
     | "design"

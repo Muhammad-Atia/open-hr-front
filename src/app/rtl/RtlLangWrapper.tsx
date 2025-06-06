@@ -4,9 +4,14 @@ import { useAppSelector } from "@/redux/hook";
 import { useEffect } from "react";
 import i18n from "@/i18n";
 
-export default function RtlLangProvider({ children }: { children: React.ReactNode }) {
-  const rtl = useAppSelector((state) => state["setting-slice"].rtl);
-  const language = useAppSelector((state) => state["setting-slice"].language);
+export default function RtlLangProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { language, rtl } = useAppSelector(
+    (state) => state["language-slice"].result
+  );
 
   useEffect(() => {
     document.documentElement.setAttribute("dir", rtl ? "rtl" : "ltr");

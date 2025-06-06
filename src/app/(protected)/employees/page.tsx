@@ -30,11 +30,16 @@ export default function Employees() {
   const search = searchParams?.get("search");
 
   // get all employees from cache or api
-  const { data } = useGetEmployeesQuery({
-    page: page ? Number(page) : 1,
-    limit: limit,
-    search: search ? search : "",
-  });
+  const { data } = useGetEmployeesQuery(
+    {
+      page: page ? Number(page) : 1,
+      limit: limit,
+      search: search ? search : "",
+    },
+    {
+      skip: !session, // لا تطلب البيانات إذا لم يوجد session
+    }
+  );
 
   const { result: employees, meta } = data || {};
   const { localData } = useLocalCacheHook(
@@ -53,7 +58,7 @@ export default function Employees() {
         <SearchBox />
         <Dialog modal={true} open={isDialogOpen} onOpenChange={onDialogChange}>
           <DialogTrigger asChild>
-            <Button className="ml-auto">Add Employee</Button>
+            <Button className="ms-auto">{t("Add_Employee")}</Button>
           </DialogTrigger>
           <EmployeeInsert onDialogChange={onDialogChange} />
         </Dialog>
@@ -62,14 +67,15 @@ export default function Employees() {
       <Table className="text-align-last-center">
         <TableHeader className="sticky top-0">
           <TableRow className="sticky top-0 text-align-last-center">
-            <TableHead className="sticky top-0">Name</TableHead>
-            <TableHead className="sticky top-0">Department</TableHead>
-            <TableHead className="sticky top-0">Email</TableHead>
-            <TableHead className="sticky top-0">Phone</TableHead>
-            <TableHead className="sticky top-0">Status</TableHead>
-
+            <TableHead className="sticky top-0">{t("Name")}</TableHead>
+            <TableHead className="sticky top-0">{t("Department")}</TableHead>
+            <TableHead className="sticky top-0">{t("Email")}</TableHead>
+            <TableHead className="sticky top-0">{t("Phone")}</TableHead>
+            <TableHead className="sticky top-0">{t("Status")}</TableHead>
             {session?.user?.role === "admin" && (
-              <TableHead className="sticky top-0 text-right">More</TableHead>
+              <TableHead className="sticky top-0 text-right">
+                {t("More")}
+              </TableHead>
             )}
           </TableRow>
         </TableHeader>
@@ -84,11 +90,12 @@ export default function Employees() {
             </TableRow>
           )}
 
+          {/* لا تعرض بيانات من الكاش إلا إذا كان المستخدم مسجلًا */}
           {employees?.length ? (
             <EmployeePage employees={employees} />
-          ) : (
+          ) : session ? (
             <EmployeePage employees={localData} />
-          )}
+          ) : null}
         </TableBody>
       </Table>
 

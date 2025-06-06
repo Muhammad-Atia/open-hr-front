@@ -45,9 +45,6 @@ export type TSetting = {
   payroll: TPayrollSetting;
   onboarding_tasks: TTaskItem[];
   offboarding_tasks: TTaskItem[];
-  rtl: boolean;
-  language: "ar" | "en";
-
 };
 
 export type TSettingState = {

@@ -100,3 +100,32 @@
 .text-align-last-center {
   text-align-last: center;
 }
+
+.my-dropdown-menu {
+  min-width: 90vw !important;
+  max-width: 95vw !important;
+  font-size: 1.2rem !important;
+  padding: 1em !important;
+  max-height: 70vh !important;
+  overflow-y: auto !important;
+  background: #fff !important;
+  border: none !important;
+  z-index: 99999 !important;
+}
+
+
+@layer utilities {
+
+  /* إخفاء الـ scrollbar في Chrome, Safari, Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* إخفاء الـ scrollbar في Firefox و Edge */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE و Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}

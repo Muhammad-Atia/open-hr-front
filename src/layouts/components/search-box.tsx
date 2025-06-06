@@ -1,6 +1,7 @@
 import { Input } from "@/ui/input";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const SearchBox = ({
   className = "mr-2",
@@ -34,10 +35,16 @@ const SearchBox = ({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+  const { t } = useTranslation();
 
   return (
     <form onSubmit={handleSearch} className={className}>
-      <Input ref={ref} type="text" placeholder="Search" />
+      <Input
+        className="text-xs w-full max-w-xs"
+        ref={ref}
+        type="text"
+        placeholder={t("search_placeholder")}
+      />
     </form>
   );
 };

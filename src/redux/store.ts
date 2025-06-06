@@ -4,6 +4,7 @@ import { apiSlice } from "./features/apiSlice/apiSlice";
 import customReducer from "./features/customSlice/customSlice";
 import filterReducer from "./features/filterSlice/filterSlice";
 import { settingSlice } from "./features/settingApiSlice/settingSliceLocal";
+import { languageSlice } from "./features/languageApiSlice/languageSliceLocal";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     filter: filterReducer,
     custom: customReducer,
     [settingSlice.name]: settingSlice.reducer,
+    [languageSlice.name]: languageSlice.reducer, // <-- أضفه هنا
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),

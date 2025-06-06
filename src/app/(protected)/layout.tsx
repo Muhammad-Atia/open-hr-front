@@ -3,7 +3,10 @@
 import Loader from "@/components/loader";
 import Header from "@/partials/header";
 import Sidebar from "@/partials/sidebar";
-import { useGetEmployeeQuery, useGetEmployeesBasicsQuery } from "@/redux/features/employeeApiSlice/employeeSlice";
+import {
+  useGetEmployeeQuery,
+  useGetEmployeesBasicsQuery,
+} from "@/redux/features/employeeApiSlice/employeeSlice";
 import { settingApi } from "@/redux/features/settingApiSlice/settingSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { signOut, useSession } from "next-auth/react";
@@ -27,13 +30,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   // بيانات الجلسة وحالة التحميل
   const { data: session, status } = useSession();
 
-    const userId = session?.user?.id;
-    const {
-      data: employeeData,
-      isLoading,
-      isError,
-    } = useGetEmployeeQuery(userId ?? "");
-  
+  const userId = session?.user?.id;
+
+  const {
+    data: employeeData,
+    isLoading,
+    isError,
+  } = useGetEmployeeQuery(userId ?? "", {
+    skip: !userId, // لا تطلب إذا لم يوجد userId
+  });
 
   // بيانات الإعدادات من الستور
   const { app_name, company_website, favicon_url } =
@@ -52,14 +57,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     signOut();
   }
 
-
-  
-    if (isError) {
-      return <div>حدث خطأ أثناء تحميل بيانات الموظف!</div>;
-    }
-    if (!session || !employeeData?.result) {
-      return <Loader />;
-    }
+  if (isError) {
+    return <div>حدث خطأ أثناء تحميل بيانات الموظف!</div>;
+  }
+  if (!session || !employeeData?.result) {
+    return <Loader />;
+  }
 
   return (
     <>

@@ -3,6 +3,7 @@ import { dateFormat, formatDateWithTime } from "@/lib/date-converter";
 import { employeeGroupByDepartment } from "@/lib/employee-info";
 import { useAddEmployeeMutation } from "@/redux/features/employeeApiSlice/employeeSlice";
 import { TEmployeeCreate } from "@/redux/features/employeeApiSlice/employeeType";
+import { Alert, AlertDescription } from "@/ui/alert";
 import { Button } from "@/ui/button";
 import { Calendar } from "@/ui/calendar";
 import { DialogContent, DialogTitle } from "@/ui/dialog";
@@ -20,10 +21,13 @@ import {
 } from "@/ui/select";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 const initialEmployeeData = {
+  name: "",
   personal_email: "",
+  work_email: "",
   department: "" as any,
   job_type: "" as any,
   gross_salary: 0,
@@ -68,16 +72,49 @@ const EmployeeInsert = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError]);
+  const { t } = useTranslation();
 
   return (
     <DialogContent
       className="!max-w-2xl overflow-y-auto max-h-[90vh]"
       onPointerDownOutside={(e) => e.preventDefault()}
     >
-      <DialogTitle className="mb-4">Add New Employee</DialogTitle>
+      <DialogTitle className="mb-4">{t("Add_New_Employee")}</DialogTitle>
       <form onSubmit={handleSubmit} className="row">
         <div className="col-12 mb-4">
-          <Label>Personal Email</Label>
+          <Label>{t("Empolyee_Name")}</Label>
+          <Input
+            required
+            type="text"
+            value={employeeData.name || ""}
+            onChange={(e) =>
+              setEmployeeData((prev) => ({
+                ...prev,
+                name: e.target.value || "",
+              }))
+            }
+            placeholder={t("Work Email:")}
+          />
+        </div>
+
+        <div className="col-12 mb-4">
+          <Label>{t("Work Email:")}</Label>
+          <Input
+            required
+            type="email"
+            value={employeeData.work_email || ""}
+            onChange={(e) =>
+              setEmployeeData((prev) => ({
+                ...prev,
+                work_email: e.target.value || "",
+              }))
+            }
+            placeholder={t("Work Email:")}
+          />
+        </div>
+
+        <div className="col-12 mb-4">
+          <Label>{t("Personal_Email")}</Label>
           <Input
             required
             type="email"
@@ -88,12 +125,11 @@ const EmployeeInsert = ({
                 personal_email: e.target.value || "",
               }))
             }
-            placeholder="Personal Email"
+            placeholder={t("Personal_Email")}
           />
         </div>
-
         <div className="col-12 mb-4">
-          <Label>Department</Label>
+          <Label>{t("Department")}</Label>
           <Select
             required
             value={employeeData.department}
@@ -111,8 +147,8 @@ const EmployeeInsert = ({
               }))
             }
           >
-            <SelectTrigger>
-              <SelectValue placeholder="Select Department" />
+            <SelectTrigger dir="rtl">
+              <SelectValue placeholder={t("Select_Department")} />
             </SelectTrigger>
             <SelectContent>
               {options.employee_department.map((item) => (
@@ -125,7 +161,7 @@ const EmployeeInsert = ({
         </div>
 
         <div className="col-12 mb-4">
-          <Label>Job Type</Label>
+          <Label>{t("Job_Type")}</Label>
           <Select
             required
             value={employeeData.job_type}
@@ -141,8 +177,8 @@ const EmployeeInsert = ({
               }))
             }
           >
-            <SelectTrigger>
-              <SelectValue placeholder="Select Job Type" />
+            <SelectTrigger dir="rtl">
+              <SelectValue placeholder={t("Select_Job_Type")} />
             </SelectTrigger>
             <SelectContent>
               {options.employee_job_type.map((item) => (
@@ -155,7 +191,7 @@ const EmployeeInsert = ({
         </div>
 
         <div className="col-12 mb-4">
-          <Label>Designation</Label>
+          <Label>{t("Designation")}</Label>
           <Input
             type="text"
             required
@@ -166,29 +202,30 @@ const EmployeeInsert = ({
                 designation: e.target.value,
               }))
             }
-            placeholder="Designation"
+            placeholder={t("Designation")}
           />
         </div>
 
         <div className="col-12 mb-4">
-          <Label>Gross Salary</Label>
+          <Label>{t("Gross_Salary")}</Label>
           <Input
-            type="number"
-            required
-            value={employeeData.gross_salary || 0}
-            onChange={(e) =>
+            type="text"
+            value={employeeData.gross_salary || ""}
+            onChange={(e) => {
+              const value = e.target.value.replace(/[^0-9]/g, ""); // فقط أرقام
               setEmployeeData((prev) => ({
                 ...prev,
-                gross_salary: Number(e.target.value),
-              }))
-            }
-            placeholder="Gross Salary"
+                gross_salary: value === "" ? 0 : Number(value),
+              }));
+            }}
+            placeholder={t("Gross_Salary")}
           />
         </div>
 
         <div className="col-12 mb-4">
-          <Label>Manager</Label>
+          <Label>{t("Manager")}</Label>
           <Select
+            dir="rtl"
             required
             value={employeeData.manager_id}
             onValueChange={(value) =>
@@ -199,7 +236,7 @@ const EmployeeInsert = ({
             }
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select User" />
+              <SelectValue placeholder={t("Select_User")} />
             </SelectTrigger>
             <SelectContent>
               {employeeGroupByDepartment().map((group) => (
@@ -219,14 +256,18 @@ const EmployeeInsert = ({
         </div>
 
         <div className="col-12 mb-4">
-          <Label>Joining Date</Label>
+          <Label>{t("Joining_Date")}</Label>
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant={"input"} className="w-full flex justify-between">
+              <Button
+                dir="ltr"
+                variant={"input"}
+                className="w-full flex justify-between"
+              >
                 {employeeData.joining_date ? (
                   dateFormat(employeeData.joining_date)
                 ) : (
-                  <span>Pick a date</span>
+                  <span>{t("Pick_a_date")}</span>
                 )}
                 <span className="flex items-center">
                   <span className="bg-border mb-2 mt-2 h-5 block w-[1px]"></span>
@@ -260,11 +301,11 @@ const EmployeeInsert = ({
           <Button className="self-end" disabled={loader}>
             {loader ? (
               <>
-                Please wait
+                {t("Please_wait")}
                 <Loader2 className="ml-2 h-4 w-4 animate-spin inline-block" />
               </>
             ) : (
-              "Add Now"
+              t("Add_Now")
             )}
           </Button>
         </div>

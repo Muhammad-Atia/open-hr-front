@@ -1,7 +1,7 @@
 import Logo from "@/components/logo";
 import { menu } from "@/config/menu";
 import { cn } from "@/lib/shadcn";
-import { useAppSelector } from "@/redux/hook";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import {
   Accordion,
   AccordionContent,
@@ -16,12 +16,100 @@ import { usePathname } from "next/navigation";
 import Gravatar from "react-gravatar";
 import ConfirmationPopup from "../components/confirmation-popup";
 import { useTranslation } from "react-i18next";
+import { UpdateEmployeeLanguage } from "@/redux/features/languageApiSlice/languageSliceLocal";
+import {
+  useGetEmployeeLanguageQuery,
+  useUpdateEmployeeLanguageMutation,
+} from "@/redux/features/languageApiSlice/languageSlice";
+import { useState } from "react";
+import LanguageSelect from "./languageSelect";
+import { useDispatch } from "react-redux";
+import { apiSlice } from "@/redux/features/apiSlice/apiSlice";
+import router from "next/router";
+import LogoutButton from "./logout";
 
 const Sidebar = ({ onClose }: { onClose?: () => void }) => {
+  const { data: session } = useSession();
+
+  const dispatch = useAppDispatch();
+
+  // const { data: employeeLanguage, isLoading } = useGetEmployeeLanguageQuery(
+  //   session?.user.id as string
+  // );
+  // const [language, setLanguage] = useState(employeeLanguage?.language || "");
+
+  // const [updateLanguage, { isLoading: isUpdating }] =
+  //   useUpdateEmployeeLanguageMutation();
+
+  // const handleLanguageChange = (e: { target: { value: string } }) => {
+  //   setLanguage(e.target.value);
+
+  //   const value = e.target.value as "ar" | "en";
+  //   const employeeId = session?.user?.id!;
+  //   const employeeLanguage = {
+  //     employeeId,
+  //     language: value,
+  //     rtl: value === "ar",
+  //   };
+  //   console.log(employeeLanguage, language);
+  //   // يمكنك هنا أيضًا إرسال الطلب للباك اند إذا أردت
+  //   // dispatch(UpdateEmployeeLanguage(employeeLanguage));
+  //   // updateLanguage(employeeLanguage);
+  // };
+
+  // const handleLanguageChange = (e: { target: { value: string } }) => {
+  //   const value = e.target.value as "ar" | "en";
+  //   const rtl = value === "ar";
+  //   setLanguage(value);
+
+  //   // تحديث الـ Redux store
+  //   dispatch(
+  //     UpdateEmployeeLanguage({
+  //       employeeId: session?.user?.id!,
+  //       language: value,
+  //       rtl: value === "ar",
+  //     })
+  //   );
+
+  //   // تحديث الـ backend (اختياري حسب الحاجة)
+  //   updateLanguage({
+  //     employeeId: session?.user?.id!,
+  //     language: value,
+  //     rtl: value === "ar",
+  //   });
+
+  //   console.log(session?.user?.id!, value, rtl);
+  // };
+
+  const { result: employeeLanguage } = useAppSelector(
+    (state) => state["language-slice"]
+  );
+  const [language, setLanguage] = useState(employeeLanguage.language);
+
+  const [updateLanguage] = useUpdateEmployeeLanguageMutation();
+
+  const handleLanguageChange = async (lang: string) => {
+    const value = lang as "ar" | "en";
+    setLanguage(value);
+
+    const payload = {
+      employeeId: session?.user?.id!,
+      language: value,
+      rtl: value === "ar",
+    };
+
+    // 1. تحديث الـ Redux store المحلي + localStorage
+    dispatch(UpdateEmployeeLanguage(payload));
+
+    // 2. تحديث الـ backend
+    await updateLanguage(payload);
+
+    // 3. (اختياري) تغيير لغة i18next
+  };
+
   const { t } = useTranslation();
 
   const pathname = usePathname();
-  const { data: session } = useSession();
 
   const { modules } = useAppSelector((state) => state["setting-slice"]);
 
@@ -46,11 +134,19 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
     .filter(Boolean);
 
   const handleLogout = async () => {
-    await signOut();
+    // signOut بدون redirect تلقائي
+    await signOut({ redirect: false });
+
+    // الآن نفذ أكوادك بأمان
+    dispatch(apiSlice.util.resetApiState());
+    localStorage.removeItem("local-employees");
+
+    // إعادة التوجيه يدويًا
+    router.push("/login");
   };
 
   return (
-    <div className="h-full flex flex-col overflow-y-auto ">
+    <div className="h-full flex flex-col overflow-y-auto no-scrollbar">
       <div className="sm:mt-10 mb-6 flex justify-center items-center h-32">
         <Logo className="pl-5" />
       </div>
@@ -61,7 +157,6 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
               const isActive = item.children.some(
                 (child) => pathname === child.path
               );
-
               return (
                 <Accordion
                   key={item.name}
@@ -125,28 +220,15 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             }
             return null;
           })}
+
+          {/* عنصر اختيار اللغة بمحاذاة باقي العناصر */}
+          <LanguageSelect
+            language={employeeLanguage.language}
+            rtl={employeeLanguage.rtl}
+            handleLanguageChange={handleLanguageChange}
+          />
         </ul>
-        <div className="pb-5">
-          <Dialog>
-            <DialogTrigger className="bg-light w-full rounded flex items-center px-3 py-2 cursor-pointer">
-              <Gravatar
-                className="rounded-full mr-2 size-5"
-                email={session?.user?.email!}
-                size={30}
-                default="mp"
-              />
-              <span className="text-sm capitalize font-medium text-text-dark">
-                {session?.user?.name?.slice(0, 13)}
-              </span>
-              <LogOut className="inline ml-auto h-5 mb-0.5" />
-            </DialogTrigger>
-            <ConfirmationPopup
-              handleConfirmation={handleLogout}
-              description="You will be logged out"
-              skipWrite={true}
-            />
-          </Dialog>
-        </div>
+        <LogoutButton />
       </nav>
     </div>
   );
