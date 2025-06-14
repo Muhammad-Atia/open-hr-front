@@ -44,7 +44,7 @@ const Setting = () => {
   };
 
   return (
-    <section className="p-6">
+    <section className="p-6" style={{ direction: "ltr" }}>
       <div className="space-y-10">
         <SettingModuleForm data={data?.result!} />
         <SettingConfigureForm
