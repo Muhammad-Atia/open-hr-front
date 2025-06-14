@@ -16,8 +16,18 @@ import {
 import Link from "next/link";
 import { notFound, useSearchParams } from "next/navigation";
 import LeaveRequestPage from "./_components/leave-request-page";
+import { useSession } from "next-auth/react";
 
 const LeaveRequest = () => {
+  const { data: session } = useSession();
+  if (session?.user.role !== "admin") {
+    // إذا كان المستخدم ليس مديرًا، لا تعرض الصفحة
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">Access Denied</h1>
+      </div>
+    );
+  }
   const searchParams = useSearchParams();
   const { limit } = useAppSelector((state) => state.filter);
   const page = searchParams?.get("page");

@@ -57,7 +57,7 @@ export default function Onboarding() {
                       <div className="flex items-center">
                         <div>
                           <small className="text-xs text-muted-foreground block">
-                            Course Name:
+                            Task Name:
                           </small>
                           <strong className="text-sm font-medium capitalize">
                             {task.task_name}
@@ -69,7 +69,7 @@ export default function Onboarding() {
                           Assign To:
                         </small>
                         <strong className="text-sm font-medium capitalize">
-                          {employeeInfoById(task.assigned_to).name}
+                          {employeeInfoById(task.assigned_to).name || "N/A"}
                         </strong>
                       </div>
                       <div>

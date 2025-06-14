@@ -137,24 +137,27 @@ export default function JobDetails() {
                 </p>
               </div>
             </li>
-            {data?.result.promotions?.map(renderPromotion)}
+            {Array.isArray(data?.result?.promotions) &&
+              data.result.promotions.map(renderPromotion)}
           </ul>
         </CardContent>
       </Card>
 
       <PreviousJobs
-        employee={data?.result!}
+        employee={data?.result ?? null}
         prev_jobs={
-          data?.result.prev_jobs ?? [
-            {
-              company_name: "",
-              company_website: "",
-              designation: "",
-              end_date: "" as any,
-              job_type: "" as any,
-              start_date: "" as any,
-            },
-          ]
+          Array.isArray(data?.result?.prev_jobs)
+            ? data.result.prev_jobs
+            : [
+                {
+                  company_name: "",
+                  company_website: "",
+                  designation: "",
+                  end_date: "" as any,
+                  job_type: "" as any,
+                  start_date: "" as any,
+                },
+              ]
         }
       />
     </div>

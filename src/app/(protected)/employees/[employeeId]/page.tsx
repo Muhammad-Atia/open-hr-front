@@ -31,6 +31,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import {
   notFound,
+  redirect,
   useParams,
   usePathname,
   useRouter,
@@ -119,6 +120,15 @@ const tabs = [
 ];
 
 export default function EmployeeSingle() {
+  const { data: session } = useSession();
+  const searchParams = useSearchParams();
+  const params = useParams<{ employeeId: string }>();
+  let employeeId = params?.employeeId;
+
+  if (params.employeeId != session?.user.id && session?.user.role !== "admin") {
+    employeeId = session?.user.id as string;
+    redirect(`/employees/${employeeId}`);
+  }
   const { modules, communication_platform, communication_platform_url } =
     useAppSelector((state) => state["setting-slice"]);
 
@@ -130,13 +140,7 @@ export default function EmployeeSingle() {
 
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const { data: session } = useSession();
-  const params = useParams<{ employeeId: string }>();
-  let employeeId = params?.employeeId;
-  if (!employeeId) {
-    employeeId = session?.user.id as string;
-  }
+
   const { data, isLoading } = useGetEmployeeQuery(employeeId);
   const { data: jobData } = useGetEmployeeJobQuery(employeeId);
   const [activeTab, setTab] = useState(tabs[0]);

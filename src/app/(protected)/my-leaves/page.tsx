@@ -38,7 +38,7 @@ const Leave = () => {
   );
 
   return (
-    <section className="p-6">
+    <section className="p-6" dir="ltr">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-h4">My Leaves Summary</h2>
       </div>

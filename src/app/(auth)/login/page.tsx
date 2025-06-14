@@ -5,25 +5,20 @@ import LoginForm from "./_components/login-form";
 import { useAppSelector } from "@/redux/hook";
 import { useEffect, useState } from "react";
 
-
-
 export default function Login() {
-const rtl = useAppSelector((state) => state["setting-slice"].rtl);
+  const { language, rtl } = useAppSelector(
+    (state) => state["language-slice"].result
+  );
+  useEffect(() => {
+    document.documentElement.setAttribute("dir", rtl ? "rtl" : "ltr");
+  }, [rtl]);
 
-
-
-const [mounted, setMounted] = useState(false);
-useEffect(() => setMounted(true), []);
-if (!mounted) return null;
-
-
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
 
   return (
     <>
-   
-
-
-    
       <div dir={rtl ? "rtl" : "ltr"} className="w-full">
         {/* <p className="text-center text-text-light">
           Login with your official google account

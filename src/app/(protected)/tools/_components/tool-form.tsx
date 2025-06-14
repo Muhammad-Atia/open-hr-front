@@ -377,12 +377,22 @@ const ToolForm = ({
                   Users
                 </Label>
                 <MultipleSelector
-                  value={item.users.map((user) => ({
-                    label: employeeInfoById(user).name || "Unknown",
-                    value: user,
-                  }))}
-                  options={employeeGroupByDepartment().flatMap(
-                    (group) => group.options
+                  value={item.users.filter(Boolean).map((user) => {
+                    const info = employeeInfoById(user);
+                    return {
+                      label:
+                        info && typeof info.name === "string" && info.name
+                          ? info.name
+                          : "Unknown",
+                      value: user,
+                    };
+                  })}
+                  options={employeeGroupByDepartment().flatMap((group) =>
+                    group.options.map((opt: { label: any }) => ({
+                      ...opt,
+                      label:
+                        typeof opt.label === "string" ? opt.label : "Unknown",
+                    }))
                   )}
                   placeholder="Select users"
                   hidePlaceholderWhenSelected={true}

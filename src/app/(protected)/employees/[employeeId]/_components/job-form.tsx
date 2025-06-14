@@ -22,6 +22,7 @@ import {
 } from "@/ui/select";
 import { Textarea } from "@/ui/textarea";
 import { CalendarIcon, Loader2, Trash2 } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -33,14 +34,16 @@ const EmployeeJobForm = ({
   onDialogChange: (open: boolean) => void;
 }) => {
   const [loader, setLoader] = useState(false);
+  const params = useParams();
+
   const [employeeJobData, setEmployeeJobData] = useState<Partial<TEmployeeJob>>(
     {
-      employee_id: employeeJob.employee_id,
-      manager_id: employeeJob.manager_id,
-      joining_date: employeeJob.joining_date,
-      permanent_date: employeeJob.permanent_date,
-      promotions: employeeJob.promotions,
-      note: employeeJob.note,
+      employee_id: employeeJob?.employee_id ?? "",
+      manager_id: employeeJob?.manager_id ?? "",
+      joining_date: employeeJob?.joining_date ?? undefined,
+      permanent_date: employeeJob?.permanent_date ?? undefined,
+      promotions: employeeJob?.promotions ?? [],
+      note: employeeJob?.note ?? "",
     }
   );
 
@@ -49,8 +52,19 @@ const EmployeeJobForm = ({
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    const employeeId = Array.isArray(params.employeeId)
+      ? params.employeeId[0]
+      : params.employeeId;
+
+    // جهز البيانات للإرسال
+    const dataToUpdate = {
+      ...employeeJobData,
+      employee_id: employeeId,
+    };
+
     setLoader(true);
-    updateEmployeeJob(employeeJobData);
+    updateEmployeeJob(dataToUpdate);
   };
 
   useEffect(() => {

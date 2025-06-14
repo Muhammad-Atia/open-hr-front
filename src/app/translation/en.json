@@ -27,6 +27,7 @@
   "nobody_requested_time_off_tomorrow": "Nobody requested time off for tomorrow",
   "upcoming_leaves": "Upcoming Leaves",
   "nobody_requested_time_off_upcoming": "Nobody requested time off for upcoming days",
+  "nobody_requested_time_off_today": "Nobody requested time off today",
   "whos_out": "Who's Out",
   "pending_tasks": "Pending Tasks",
   "no_pending_tasks": "No pending tasks",
@@ -82,5 +83,14 @@
   "Select_Asset_Type": "Select Asset Type",
   "Asset_Description": "Asset Description",
   "Asset_Status": "Asset Status",
-  "Select_Asset_Status": "Select Asset Status"
+  "Select_Asset_Status": "Select Asset Status",
+  "All the data related to this employee will be deleted.": "All the data related to this employee will be deleted.",
+  "Are_you_sure_you_want_to_delete_this_employee": "Are you sure you want to delete this employee?",
+  "Delete_Employee": "Delete Employee",
+  "Delete": "Delete",
+  "Cancel": "Cancel",
+  "Edit_Employee": "Edit Employee",
+  "Appointment_Letter": "Appointment Letter",
+  "Employment_Certificate": "Employment Certificate",
+  "Are_you_Sure": "Are you Sure ?"
 }

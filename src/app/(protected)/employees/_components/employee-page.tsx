@@ -7,7 +7,7 @@ import { useDeleteEmployeeMutation } from "@/redux/features/employeeApiSlice/emp
 import { TEmployee } from "@/redux/features/employeeApiSlice/employeeType";
 import { Badge } from "@/ui/badge";
 import { Button } from "@/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +26,7 @@ import EmployeeAppointmentLetter, {
 import EmployeeEmploymentCertificate, {
   getEmploymentCertificateHtml,
 } from "./employee-employment-certificate";
+import { t } from "i18next";
 
 const EmployeePage = ({ employees }: { employees: TEmployee[] }) => {
   const { data: session } = useSession();
@@ -145,7 +146,7 @@ const EmployeePage = ({ employees }: { employees: TEmployee[] }) => {
                                 variant={"ghost"}
                                 size={"sm"}
                               >
-                                Delete
+                                {t("Delete")}
                               </Button>
                             </DialogTrigger>
                             <ConfirmationPopup
@@ -153,7 +154,9 @@ const EmployeePage = ({ employees }: { employees: TEmployee[] }) => {
                                 handleEmployeeDelete(employee?.id)
                               }
                               id={employee?.id}
-                              description="All the data related to this employee will be deleted."
+                              description={t(
+                                "Are_you_sure_you_want_to_delete_this_employee"
+                              )}
                             />
                           </Dialog>
                         </DropdownMenuItem>
@@ -161,13 +164,15 @@ const EmployeePage = ({ employees }: { employees: TEmployee[] }) => {
                       <li>
                         <DropdownMenuItem asChild>
                           <Dialog>
+                            <DialogTitle></DialogTitle>
+
                             <DialogTrigger asChild>
                               <Button
                                 className="w-full justify-start"
                                 variant="ghost"
                                 size="sm"
                               >
-                                Appointment Letter
+                                {t("Appointment_Letter")}
                               </Button>
                             </DialogTrigger>
                             <DialogContent>
@@ -183,7 +188,7 @@ const EmployeePage = ({ employees }: { employees: TEmployee[] }) => {
                                   )
                                 }
                               >
-                                Print
+                                {t("Print")}
                               </Button>
                             </DialogContent>
                           </Dialog>
@@ -192,18 +197,19 @@ const EmployeePage = ({ employees }: { employees: TEmployee[] }) => {
                       <li>
                         <DropdownMenuItem asChild>
                           <Dialog>
+                            <DialogTitle></DialogTitle>
                             <DialogTrigger asChild>
                               <Button
                                 className="w-full justify-start"
                                 variant="ghost"
                                 size="sm"
                               >
-                                Employment Certificate
+                                {t("Employment_Certificate")}
                               </Button>
                             </DialogTrigger>
                             <DialogContent>
                               <h3 className="text-lg font-semibold mb-2">
-                                Employment Certificate
+                                {t("Employment_Certificate")}
                               </h3>
                               <EmployeeEmploymentCertificate
                                 employee={employee}
@@ -216,7 +222,7 @@ const EmployeePage = ({ employees }: { employees: TEmployee[] }) => {
                                   )
                                 }
                               >
-                                Print
+                                {t("Print")}
                               </Button>
                             </DialogContent>
                           </Dialog>

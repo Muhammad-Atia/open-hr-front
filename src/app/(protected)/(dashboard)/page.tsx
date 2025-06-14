@@ -26,17 +26,17 @@ const UserSection = ({
 }) => (
   <>
     {isModuleEnabled(modules, "tool") && (
-      <div className="col-12">
+      <div className="col-span-12">
         <UserTools userId={userId} />
       </div>
     )}
     {isModuleEnabled(modules, "course") && (
-      <div className="col-12">
+      <div className="col-span-12">
         <UserCourses userId={userId} />
       </div>
     )}
     {isModuleEnabled(modules, "asset") && (
-      <div className="col-12">
+      <div className="col-span-12">
         <UserAssets userId={userId} />
       </div>
     )}
@@ -46,21 +46,21 @@ const UserSection = ({
 const AdminSection = ({ modules }: { modules: any[] }) => (
   <>
     {isModuleEnabled(modules, "leave") && (
-      <div className="lg:col-6">
+      <div className="lg:col-span-6 col-span-12">
         <UpcomingLeaves />
       </div>
     )}
     {isModuleEnabled(modules, "employee-lifecycle") && (
-      <div className="lg:col-6">
+      <div className="lg:col-span-6 col-span-12">
         <PendingTasks />
       </div>
     )}
     {isModuleEnabled(modules, "calendar") && (
       <>
-        <div className="lg:col-6">
+        <div className="lg:col-span-6 col-span-12">
           <UpcomingHolidays />
         </div>
-        <div className="lg:col-6">
+        <div className="lg:col-span-6 col-span-12">
           <UpcomingEvents />
         </div>
       </>
@@ -84,8 +84,8 @@ const Dashboard = () => {
 
   return (
     <section className="p-6">
-      <div className="row gx-3">
-        <div className="col-12 mb-8">
+      <div className="grid grid-cols-12 gap-3">
+        <div className="col-span-12 mb-8">
           <ClearCache />
           <div className="flex">
             <Gravatar
@@ -117,7 +117,7 @@ const Dashboard = () => {
         ) : session?.user.role === "admin" ? (
           <AdminSection modules={modules} />
         ) : session?.user.role === "former" ? (
-          <div className="col-12">
+          <div className="col-span-12">
             <h4 className="mb-3">Your Account Has Been Archived!</h4>
             <p>
               Thanks you for your service. Your contribution to the organization
@@ -125,7 +125,7 @@ const Dashboard = () => {
             </p>
           </div>
         ) : (
-          <div className="col-12">
+          <div className="col-span-12">
             <h4 className="mb-3">You Don't Have Permissions!</h4>
           </div>
         )}

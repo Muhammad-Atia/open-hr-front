@@ -92,7 +92,8 @@ const CalendarPage = () => {
   }
 
   return (
-    <section className="p-6">
+    <section className="p-6" dir="ltr">
+      <h1 className="text-h2 mb-4">Calendar</h1>
       <div className="flex flex-col sm:flex-row justify-between items-center gap-1 sm:gap-4 relative sm:-mb-10 mb-1 z-10 sm:w-fit">
         {session?.user.role === "user" ? (
           <h2 className="text-h4 mr-2">

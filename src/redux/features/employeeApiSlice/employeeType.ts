@@ -57,6 +57,7 @@ export type TEmployeeCreate = {
   joining_date: Date;
   designation: string;
   manager_id: string;
+  password: string;
 };
 
 export type TEmployeeState<T = TEmployee[]> = {

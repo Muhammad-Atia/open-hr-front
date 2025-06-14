@@ -59,90 +59,92 @@ export default function Document() {
           </UploadDialog>
         </CardHeader>
         <CardContent>
-          {data?.result && data?.result?.documents.length! > 0 ? (
+          {data?.result && data?.result?.documents.length > 0 ? (
             <ul className="grid md:grid-cols-3 sm:grid-cols-2 2xl:grid-cols-4 gap-4">
-              {data.result.documents.map((document, index) => {
-                return (
-                  <li
-                    key={index}
-                    className="col-span-1 rounded bg-light p-3 border-border border flex flex-col"
-                  >
-                    <div className="w-full bg-border rounded mx-auto mb-4 items-center h-[160px] p-1.5 flex justify-center">
-                      <FileManager
-                        setFile={() => {}}
-                        enable={false}
-                        existingFile={document.file}
-                        folder={`${company_name.replace(/\s/g, "-").toLowerCase()}`}
-                        maxSize={MAX_SIZE}
-                        permission="public-read"
-                        className="h-[150px]"
-                      />
-                    </div>
-                    <div className="flex justify-between mt-auto">
-                      <p className="text-sm text-text-light line-clamp-1">
-                        {document.name}
-                      </p>
+              {data.result.documents.map((document, index) => (
+                <li
+                  key={index}
+                  className="col-span-1 rounded bg-light dark:bg-muted p-3 border border-border flex flex-col h-[290px] shadow-sm"
+                >
+                  <img
+                    src={document._id}
+                    alt={document.name}
+                    className="w-full h-full object-contain"
+                  />
 
-                      <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <Ellipsis className="size-4" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                  <div className="w-full bg-border/40 rounded mb-3 flex items-center justify-center h-[150px] overflow-hidden">
+                    <FileManager
+                      setFile={() => {}}
+                      enable={false}
+                      existingFile={document.file}
+                      folder={`${company_name.replace(/\s/g, "-").toLowerCase()}`}
+                      maxSize={MAX_SIZE}
+                      permission="public-read"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <p className="text-xs text-text-light dark:text-text-dark line-clamp-1 break-all mb-2 text-center">
+                    {document.name}
+                  </p>
+                  <div className="flex justify-between items-center mt-auto gap-1">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <Ellipsis className="size-4" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem asChild>
+                          <UploadDialog
+                            size="sm"
+                            type="button"
+                            file={document.file}
+                            variant="outline"
+                            className="h-auto p-1.5 border-none w-full justify-start bg-transparent max-w-sm"
+                          >
+                            Preview
+                          </UploadDialog>
+                        </DropdownMenuItem>
+                        {(session?.user.role === "admin" ||
+                          session?.user.role === "moderator") && (
                           <DropdownMenuItem asChild>
-                            <UploadDialog
-                              size={"sm"}
-                              type="button"
-                              file={document.file}
-                              variant={"outline"}
-                              className="h-auto p-1.5 border-none w-full justify-start bg-transparent max-w-sm"
-                            >
-                              Preview
-                            </UploadDialog>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button
+                                  size="sm"
+                                  className="border-none w-full bg-transparent text-left justify-start text-xs h-auto py-1.5 px-1.5 text-destructive hover:text-white"
+                                  variant="destructive"
+                                  type="button"
+                                >
+                                  Delete
+                                </Button>
+                              </DialogTrigger>
+                              <ConfirmationPopup
+                                handleConfirmation={async () => {
+                                  const encodedKey = encodeURIComponent(
+                                    document.file
+                                  );
+                                  const res = await axios.delete(
+                                    `bucket/delete/${encodedKey}`
+                                  );
+                                  if (res.status !== 200) return;
+                                  deleteDocument({
+                                    documentId: document._id!,
+                                    employeeId: employeeId,
+                                  });
+                                }}
+                              />
+                            </Dialog>
                           </DropdownMenuItem>
-                          {(session?.user.role === "admin" ||
-                            session?.user.role === "moderator") && (
-                            <DropdownMenuItem asChild>
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <Button
-                                    size={"sm"}
-                                    className="border-none w-full bg-transparent text-left justify-start text-sm h-auto py-1.5 px-1.5 text-text-dark hover:text-white"
-                                    variant={"destructive"}
-                                    type="button"
-                                  >
-                                    Delete
-                                  </Button>
-                                </DialogTrigger>
-
-                                <ConfirmationPopup
-                                  handleConfirmation={async () => {
-                                    const encodedKey = encodeURIComponent(
-                                      document.file
-                                    );
-                                    const res = await axios.delete(
-                                      `bucket/delete/${encodedKey}`
-                                    );
-                                    if (res.status !== 200) {
-                                      return;
-                                    }
-                                    deleteDocument({
-                                      documentId: document._id!,
-                                      employeeId: employeeId,
-                                    });
-                                  }}
-                                />
-                              </Dialog>
-                            </DropdownMenuItem>
-                          )}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
-                  </li>
-                );
-              })}
+                        )}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </li>
+              ))}
             </ul>
           ) : (
-            <p className="py-4">No documents uploaded</p>
+            <p className="py-4 text-center text-text-light dark:text-text-dark">
+              لا توجد مستندات مرفوعة
+            </p>
           )}
         </CardContent>
       </Card>

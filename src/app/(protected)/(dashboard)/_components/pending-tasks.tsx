@@ -12,13 +12,14 @@ import { TOnboardingTask } from "@/redux/features/employeeOnboardingApiSlice/emp
 import { Button } from "@/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { BadgeInfo, CheckCircle, CircleDashed } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { useTranslation, Trans } from "react-i18next";
 import Loader from "@/components/loader";
 
 const PendingTasks = () => {
   const { t } = useTranslation();
+  const [allDisabled, setAllDisabled] = useState(false);
 
   const { data: offboardingTasks, isLoading: isOffboardingLoading } =
     useGetPendingOffboardingTaskQuery(undefined);
@@ -48,6 +49,8 @@ const PendingTasks = () => {
     type: string
   ) => {
     try {
+      setAllDisabled(true); // عطل كل الأزرار
+
       if (type === "offboarding") {
         await updateOffboardingTask({
           employee_id: employeeId,
@@ -60,6 +63,7 @@ const PendingTasks = () => {
         }).unwrap();
       }
       toast.success("Task marked as completed");
+      setTimeout(() => setAllDisabled(false), 2000);
     } catch (error: any) {
       toast.error(error.message ?? "Failed to complete task");
     }
@@ -131,6 +135,7 @@ const PendingTasks = () => {
                     </div>
                   </div>
                   <Button
+                    disabled={allDisabled}
                     variant="ghost"
                     size="sm"
                     onClick={() =>

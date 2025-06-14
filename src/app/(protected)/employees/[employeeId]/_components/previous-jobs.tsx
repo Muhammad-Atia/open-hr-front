@@ -49,8 +49,23 @@ export default function PreviousJobs({
   employee,
 }: {
   prev_jobs: TPrevJob[];
-  employee: TEmployeeJob;
+  employee: TEmployeeJob | null;
 }) {
+  if (!employee || !employee.employee_id) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Previous Jobs</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-muted-foreground text-sm">
+            لا توجد بيانات سابقة للوظائف
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const { data: session } = useSession();
   const userRole = session?.user.role;
   const { isDialogOpen, onDialogChange } = useDialog();

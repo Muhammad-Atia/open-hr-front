@@ -139,17 +139,23 @@ const AssetForm = ({
         <Label>User</Label>
         <MultipleSelector
           value={
-            assetData.user
+            assetData.user && employeeInfoById(assetData.user)
               ? [
                   {
-                    label: employeeInfoById(assetData.user)?.name || "Unknown",
+                    label:
+                      typeof employeeInfoById(assetData.user).name === "string"
+                        ? (employeeInfoById(assetData.user).name ?? "Unknown")
+                        : "Unknown",
                     value: assetData.user,
                   },
                 ]
               : []
           }
-          options={employeeGroupByDepartment().flatMap(
-            (group) => group.options
+          options={employeeGroupByDepartment().flatMap((group) =>
+            group.options.map((opt: { label: any }) => ({
+              ...opt,
+              label: typeof opt.label === "string" ? opt.label : "Unknown",
+            }))
           )}
           placeholder="Select user"
           hidePlaceholderWhenSelected={true}

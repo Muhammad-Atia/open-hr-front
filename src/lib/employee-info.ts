@@ -24,18 +24,29 @@ const getEmployeesData = () => {
 
 export const employeeInfoById = (id: string) => {
   const employees = getEmployeesData();
-  const employee: Partial<TEmployee> | undefined = employees?.find(
+  // حماية من الخطأ إذا لم تكن employees مصفوفة
+  if (!Array.isArray(employees)) {
+    return {
+      id,
+      name: "N/A", // اسم افتراضي بدل id
+      work_email: "N/A",
+      department: "N/A",
+      designation: "N/A",
+    } as unknown as Partial<TEmployee>;
+  }
+
+  const employee: Partial<TEmployee> | undefined = employees.find(
     (employee: Partial<TEmployee>) => employee.id === id
   );
 
-  // @ts-ignore
   const fallback = {
     id,
-    name: id,
+    name: employee?.name, // اسم افتراضي بدل id
     work_email: "N/A",
     department: "N/A",
     designation: "N/A",
-  } as Partial<TEmployee>;
+  } as unknown as Partial<TEmployee>;
+  console.log("الموظفين:", employees);
 
   return employee ? employee : fallback;
 };

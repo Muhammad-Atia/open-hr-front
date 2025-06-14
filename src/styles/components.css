@@ -1,4 +1,4 @@
-/* table loader */
+table loader
 .loader {
   @apply bg-light w-full h-2 rounded relative;
 }
@@ -116,6 +116,7 @@
 
 @layer utilities {
 
+
   /* إخفاء الـ scrollbar في Chrome, Safari, Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -128,4 +129,32 @@
     scrollbar-width: none;
     /* Firefox */
   }
+}
+
+.sc::-webkit-scrollbar {
+  width: 6px;
+  /* عرض الشريط */
+  height: 6px;
+  /* للتمرير الأفقي إذا احتجت */
+}
+
+.sc::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  /* لون الشريط */
+  border-radius: 4px;
+}
+
+.sc::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* دعم Firefox */
+.sc {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+
+.text-side-menu {
+  color: var(--side-menu-text-color);
 }

@@ -34,6 +34,7 @@ const initialEmployeeData = {
   joining_date: new Date(),
   designation: "",
   manager_id: "",
+  password: "",
 };
 
 const EmployeeInsert = ({
@@ -93,7 +94,7 @@ const EmployeeInsert = ({
                 name: e.target.value || "",
               }))
             }
-            placeholder={t("Work Email:")}
+            placeholder={t("Empolyee_Name")}
           />
         </div>
 
@@ -295,6 +296,23 @@ const EmployeeInsert = ({
               />
             </PopoverContent>
           </Popover>
+        </div>
+
+        <div className="col-12 mb-4">
+          <Label>{t("Password")}</Label>
+          <Input
+            required
+            type="password"
+            value={employeeData.password || ""}
+            onChange={(e) =>
+              setEmployeeData((prev) => ({
+                ...prev,
+                password: e.target.value,
+              }))
+            }
+            placeholder={t("Password")}
+            autoComplete="new-password"
+          />
         </div>
 
         <div className="col-12 text-right">

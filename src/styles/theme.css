@@ -25,4 +25,46 @@
   --text-dark-color: #0f1324;
   --text-muted-color: #595f78;
   --text-white-color: #ffffff;
+  --color-white: #ffffff;
+    /* اللون الافتراضي */
+}
+
+.dark {
+  --body-color: #181a20;
+  /* خلفية داكنة مريحة */
+  --primary-color: #ffffff;
+  /* لون أساسي فاتح */
+  --border-color: #23272f;
+  /* حدود داكنة ناعمة */
+  --light-color: #23272f;
+  /* لون فاتح نسبيًا للبطاقات أو الخلفيات الثانوية */
+  --dark-color: #f3f4f6;
+  /* لون داكن فاتح للنصوص أو الرموز */
+  --accent-color: #3b82f6;
+  /* لون مميز أزرق أو أي accent يناسب البراند */
+  --muted-color: #374151;
+  /* رمادي داكن للعناصر الثانوية */
+  --danger-color: #ef4444;
+  /* أحمر واضح للتحذيرات */
+  --success-color: #22c55e;
+  /* أخضر واضح للنجاح */
+  --warning-color: #eab308;
+  /* أصفر داكن للتحذيرات */
+
+  --text-default-color: #f6f4f3;
+  /* النص الأساسي: أبيض فاتح */
+  --text-light-color: #ffffff;
+  /* نص ثانوي: رمادي فاتح */
+  --text-dark-color: #ffffff;
+  /* نص داكن (للتباين): أبيض نقي */
+  --text-muted-color: #9ca2a2;
+  /* نص muted: رمادي متوسط */
+  --text-white-color: #0c0505;
+  /* نص أبيض */
+    --primary-color: #ffffff;
+    --color-white: #000000;
+    --color-slate-100: #0b2034;
+    --border-color :#78787899;
+    --color-yellow-100: #e7b71800;
+      /* لون الداكن */
 }

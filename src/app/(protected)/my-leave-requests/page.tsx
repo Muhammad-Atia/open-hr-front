@@ -51,7 +51,7 @@ const LeaveRequest = () => {
   }
 
   return (
-    <section className="p-6">
+    <section className="p-6" dir="ltr">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-h4 hidden sm:block mr-2">My Leave Requests</h2>
         {session?.user?.role !== "former" && (

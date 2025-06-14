@@ -48,6 +48,7 @@ export default function PasswordForm({
                   name="current_password"
                   placeholder="Current Password"
                   readOnly={isReadOnly}
+                  required={true}
                 />
               </div>
 
@@ -66,6 +67,7 @@ export default function PasswordForm({
                   name="new_password"
                   placeholder="New Password"
                   readOnly={isReadOnly}
+                  required={true}
                 />
               </div>
             </>

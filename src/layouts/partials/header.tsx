@@ -14,15 +14,18 @@ import Sidebar from "./sidebar";
 const Header = () => {
   const { isDialogOpen, onDialogChange } = useDialog();
   return (
-    <header className="sticky bg-background px-4 h-[50px] top-0 lg:hidden flex justify-between items-center pb-5">
-      <Logo className=" w-15 h-15 sm:w-32 sm:h-32" />
+    <header className="sticky  px-4 h-[50px] top-0 lg:hidden flex justify-between items-center pb-5">
+      <Logo className=" w-15 h-15 sm:w-15 sm:h-15" />
       <Sheet open={isDialogOpen} onOpenChange={onDialogChange}>
         <SheetTrigger asChild>
           <Button size={"sm"} variant={"ghost"} className="p-2">
             <Menu />
           </Button>
         </SheetTrigger>
-        <SheetContent side={"left"} className="!max-w-xs">
+        <SheetContent
+          side={"left"}
+          className="!max-w-xs h-full overflow-y-auto"
+        >
           <SheetHeader className="sr-only">
             <SheetTitle>menu bar</SheetTitle>
           </SheetHeader>

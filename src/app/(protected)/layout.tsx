@@ -31,14 +31,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession();
 
   const userId = session?.user?.id;
-
   const {
     data: employeeData,
     isLoading,
     isError,
-  } = useGetEmployeeQuery(userId ?? "", {
-    skip: !userId, // لا تطلب إذا لم يوجد userId
-  });
+  } = useGetEmployeeQuery(userId ?? "");
 
   // بيانات الإعدادات من الستور
   const { app_name, company_website, favicon_url } =
@@ -57,9 +54,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     signOut();
   }
 
-  if (isError) {
-    return <div>حدث خطأ أثناء تحميل بيانات الموظف!</div>;
-  }
+  // if (isError) {
+  //   return <div>حدث خطأ أثناء تحميل بيانات الموظف!</div>;
+  // }
   if (!session || !employeeData?.result) {
     return <Loader />;
   }
@@ -78,7 +75,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <aside className="w-0 overflow-hidden lg:block transition-[width] flex-none lg:w-[220px] bg-background min-h-screen h-screen sticky left-0 top-0">
           <Sidebar />
         </aside>
-        <div className="flex-1 py-5 px-5 lg:pl-0 max-w-full overflow-x-hidden">
+        <div className="flex-1 py-5 px-5  max-w-full overflow-x-hidden">
           <Header />
           <main className="flex-1 max-w-full h-full rounded-lg bg-light overflow-x-hidden">
             {children}

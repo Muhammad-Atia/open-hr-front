@@ -27,6 +27,21 @@ import { useDispatch } from "react-redux";
 import { apiSlice } from "@/redux/features/apiSlice/apiSlice";
 import router from "next/router";
 import LogoutButton from "./logout";
+import DarkModeToggle from "@/styles/darkmode";
+import { Card, CardContent, CardHeader } from "@/ui/card";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Button } from "@/ui/button";
+import { Separator } from "@/ui/separator";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/ui/navigation-menu";
 
 const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   const { data: session } = useSession();
@@ -85,6 +100,7 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
     (state) => state["language-slice"]
   );
   const [language, setLanguage] = useState(employeeLanguage.language);
+  const rtl = employeeLanguage.rtl;
 
   const [updateLanguage] = useUpdateEmployeeLanguageMutation();
 
@@ -146,90 +162,125 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   };
 
   return (
-    <div className="h-full flex flex-col overflow-y-auto no-scrollbar">
-      <div className="sm:mt-10 mb-6 flex justify-center items-center h-32">
-        <Logo className="pl-5" />
-      </div>
-      <nav className="px-5 flex-1 flex flex-col">
-        <ul className="flex-1">
-          {filterMenuByModule.map((item) => {
-            if (item && "children" in item && item.children) {
-              const isActive = item.children.some(
-                (child) => pathname === child.path
-              );
-              return (
-                <Accordion
-                  key={item.name}
-                  type="single"
-                  collapsible
-                  value={isActive ? item.name : undefined}
+    <div className=" bg-background min-h-0">
+      {/* Sidebar */}
+      <Card className="h-screen flex flex-col border-none shadow-none bg-transparent">
+        {/* الشعار */}
+        <CardHeader className="flex items-center justify-center h-24 border-b ">
+          <Logo className="w-16 h-16  flex-col" />
+        </CardHeader>
+        {/* القائمة + الإعدادات داخل ScrollArea واحدة */}
+        <div className="flex-1 overflow-y-auto flex flex-col no-scrollbar">
+          <ScrollArea className="flex-1 min-h-0 sc">
+            <div className="flex flex-col min-h-full">
+              {/* القائمة */}
+              <nav aria-label="Main menu" className="px-3 py-4">
+                <ul
+                  className={`text-side-menu  rounded-md" flex flex-col gap-1 px-3 py-4 ${
+                    rtl ? "text-right" : "text-left"
+                  }`}
+                  dir={rtl ? "rtl" : "ltr"}
                 >
-                  <AccordionItem className="border-none" value={item.name}>
-                    <AccordionTrigger className="pl-2 hover:no-underline pb-3 pt-2 text-sm">
-                      <div className="flex items-center justify-start">
-                        {item.icon && (
-                          <item.icon className="inline h-5 mr-2 mb-0.5" />
-                        )}
-                        {t(item.name)}
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="pl-2">
-                        {item.children.map((child) => (
-                          <li className="mb-2" key={child.name}>
-                            <Link
-                              {...(onClose && { onMouseDown: onClose })}
-                              href={child.path}
-                              className={cn(
-                                "rounded text-black text-sm font-medium block px-2 py-2.5",
-                                child.path === pathname &&
-                                  "bg-primary text-primary-foreground"
-                              )}
-                            >
-                              {child.icon && (
-                                <child.icon className="inline h-5 mr-2 mb-0.5" />
-                              )}
-                              {t(child.name)}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              );
-            } else if (item) {
-              return (
-                <li className="mb-2" key={item.name}>
-                  <Link
-                    {...(onClose && { onMouseDown: onClose })}
-                    href={item.path}
-                    className={cn(
-                      "rounded text-black text-sm font-medium block px-2 py-2.5",
-                      item.path === pathname &&
-                        "bg-primary text-primary-foreground"
-                    )}
-                  >
-                    {item.icon && (
-                      <item.icon className="inline h-5 mr-2 mb-0.5" />
-                    )}
-                    {t(item.name)}
-                  </Link>
-                </li>
-              );
-            }
-            return null;
-          })}
+                  {" "}
+                  {filterMenuByModule.map((item) =>
+                    item && "children" in item && item.children ? (
+                      <li key={item.name}>
+                        <Accordion
+                          type="single"
+                          collapsible
+                          value={
+                            item.children.some(
+                              (child) => pathname === child.path
+                            )
+                              ? item.name
+                              : undefined
+                          }
+                          className="w-full"
+                        >
+                          <AccordionItem
+                            value={item.name}
+                            className="border-none"
+                          >
+                            <AccordionTrigger className="pl-2 py-2 text-sm font-semibold">
+                              <div className="flex items-center gap-2">
+                                {item.icon && <item.icon className="h-5 w-5" />}
+                                {t(item.name)}
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <ul className="pl-4 flex flex-col gap-1">
+                                {item.children.map((child) => (
+                                  <li key={child.name}>
+                                    <Button
+                                      asChild
+                                      variant={
+                                        child.path === pathname
+                                          ? "secondary"
+                                          : "ghost"
+                                      }
+                                      className="w-full justify-start text-sm"
+                                    >
+                                      <a
+                                        href={child.path}
+                                        {...(onClose && {
+                                          onMouseDown: onClose,
+                                        })}
+                                      >
+                                        {child.icon && (
+                                          <child.icon className="h-5 w-5 mr-2" />
+                                        )}
+                                        {t(child.name)}
+                                      </a>
+                                    </Button>
+                                  </li>
+                                ))}
+                              </ul>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </li>
+                    ) : item ? (
+                      <li key={item.name}>
+                        <Button
+                          asChild
+                          variant={
+                            item.path === pathname ? "secondary" : "ghost"
+                          }
+                          className={`w-full justify-start text-sm
+                            ${item.path !== pathname ? "hover:bg-gray-100 dark:hover:bg-gray-400" : ""}
+                          `}
+                        >
+                          <a
+                            href={item.path}
+                            {...(onClose && { onMouseDown: onClose })}
+                          >
+                            {item.icon && (
+                              <item.icon className="h-5 w-5 mr-2" />
+                            )}
+                            {t(item.name)}
+                          </a>
+                        </Button>
+                      </li>
+                    ) : null
+                  )}
+                </ul>
+                <div className="mt-auto px-3 py-4 border-t dark:border-neutral-800 bg-background flex flex-col gap-2">
+                  <LanguageSelect
+                    language={employeeLanguage.language}
+                    rtl={employeeLanguage.rtl}
+                    handleLanguageChange={handleLanguageChange}
+                  />
+                  <DarkModeToggle />
+                  <LogoutButton />
+                </div>
+              </nav>
+              {/* إعدادات اللغة والثيم وزر الخروج */}
+            </div>
+          </ScrollArea>
+        </div>
+      </Card>
 
-          {/* عنصر اختيار اللغة بمحاذاة باقي العناصر */}
-          <LanguageSelect
-            language={employeeLanguage.language}
-            rtl={employeeLanguage.rtl}
-            handleLanguageChange={handleLanguageChange}
-          />
-        </ul>
-        <LogoutButton />
-      </nav>
+      {/* Main Content */}
     </div>
   );
 };

@@ -29,6 +29,14 @@ export default function Employees() {
   const page = searchParams?.get("page");
   const search = searchParams?.get("search");
 
+  if (session?.user.role !== "admin") {
+    // إذا كان المستخدم ليس مديرًا، لا تعرض الصفحة
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">Access Denied</h1>
+      </div>
+    );
+  }
   // get all employees from cache or api
   const { data } = useGetEmployeesQuery(
     {

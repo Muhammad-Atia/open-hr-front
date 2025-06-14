@@ -8,6 +8,7 @@ import { Input } from "@/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { t } from "i18next";
 
 const ConfirmationPopup = ({
   handleConfirmation,
@@ -25,7 +26,7 @@ const ConfirmationPopup = ({
   return (
     <DialogContent>
       <DialogHeader className="mb-4">
-        <DialogTitle className="mb-2">Are You Sure?</DialogTitle>
+        <DialogTitle className="mb-2">{t("Are_you_Sure")}</DialogTitle>
         {description && <DialogDescription>{description}</DialogDescription>}
       </DialogHeader>
 
