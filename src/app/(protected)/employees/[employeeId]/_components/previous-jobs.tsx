@@ -51,6 +51,14 @@ export default function PreviousJobs({
   prev_jobs: TPrevJob[];
   employee: TEmployeeJob | null;
 }) {
+  const { data: session } = useSession();
+  const userRole = session?.user.role;
+  const { isDialogOpen, onDialogChange } = useDialog();
+  const [updatePrev, { isLoading: isPrevJobLoading }] =
+    useUpdateEmployeeJobMutation();
+  const [prevJobData, setPrevJobData] = useState<TPrevJob[]>(
+    prev_jobs?.length ? prev_jobs : [initialPrevJobData]
+  );
   if (!employee || !employee.employee_id) {
     return (
       <Card>
@@ -65,15 +73,6 @@ export default function PreviousJobs({
       </Card>
     );
   }
-
-  const { data: session } = useSession();
-  const userRole = session?.user.role;
-  const { isDialogOpen, onDialogChange } = useDialog();
-  const [updatePrev, { isLoading: isPrevJobLoading }] =
-    useUpdateEmployeeJobMutation();
-  const [prevJobData, setPrevJobData] = useState<TPrevJob[]>(
-    prev_jobs?.length ? prev_jobs : [initialPrevJobData]
-  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

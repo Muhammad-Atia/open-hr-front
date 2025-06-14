@@ -1,6 +1,5 @@
 import Logo from "@/components/logo";
 import { menu } from "@/config/menu";
-import { cn } from "@/lib/shadcn";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import {
   Accordion,
@@ -8,40 +7,21 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/ui/accordion";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-import { LogOut } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
+
 import { usePathname } from "next/navigation";
-import Gravatar from "react-gravatar";
-import ConfirmationPopup from "../components/confirmation-popup";
+
 import { useTranslation } from "react-i18next";
 import { UpdateEmployeeLanguage } from "@/redux/features/languageApiSlice/languageSliceLocal";
-import {
-  useGetEmployeeLanguageQuery,
-  useUpdateEmployeeLanguageMutation,
-} from "@/redux/features/languageApiSlice/languageSlice";
+import { useUpdateEmployeeLanguageMutation } from "@/redux/features/languageApiSlice/languageSlice";
 import { useState } from "react";
 import LanguageSelect from "./languageSelect";
-import { useDispatch } from "react-redux";
-import { apiSlice } from "@/redux/features/apiSlice/apiSlice";
-import router from "next/router";
+import { useSession } from "next-auth/react";
+
 import LogoutButton from "./logout";
 import DarkModeToggle from "@/styles/darkmode";
-import { Card, CardContent, CardHeader } from "@/ui/card";
+import { Card, CardHeader } from "@/ui/card";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Button } from "@/ui/button";
-import { Separator } from "@/ui/separator";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "@/ui/navigation-menu";
 
 const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   const { data: session } = useSession();
@@ -99,13 +79,14 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   const { result: employeeLanguage } = useAppSelector(
     (state) => state["language-slice"]
   );
-  const [language, setLanguage] = useState(employeeLanguage.language);
+  const [, setLanguage] = useState(employeeLanguage.language);
   const rtl = employeeLanguage.rtl;
 
   const [updateLanguage] = useUpdateEmployeeLanguageMutation();
 
   const handleLanguageChange = async (lang: string) => {
     const value = lang as "ar" | "en";
+
     setLanguage(value);
 
     const payload = {
@@ -148,18 +129,6 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
       }
     })
     .filter(Boolean);
-
-  const handleLogout = async () => {
-    // signOut بدون redirect تلقائي
-    await signOut({ redirect: false });
-
-    // الآن نفذ أكوادك بأمان
-    dispatch(apiSlice.util.resetApiState());
-    localStorage.removeItem("local-employees");
-
-    // إعادة التوجيه يدويًا
-    router.push("/login");
-  };
 
   return (
     <div className=" bg-background min-h-0">

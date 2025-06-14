@@ -6,9 +6,7 @@ import { useAppSelector } from "@/redux/hook";
 import { useEffect, useState } from "react";
 
 export default function Login() {
-  const { language, rtl } = useAppSelector(
-    (state) => state["language-slice"].result
-  );
+  const { rtl } = useAppSelector((state) => state["language-slice"].result);
   useEffect(() => {
     document.documentElement.setAttribute("dir", rtl ? "rtl" : "ltr");
   }, [rtl]);

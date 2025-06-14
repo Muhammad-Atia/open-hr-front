@@ -1,6 +1,6 @@
 import { apiSlice } from "../apiSlice/apiSlice";
 import { UpdateEmployeeLanguage } from "./languageSliceLocal";
-import { TEmployeeLanguage, TEmployeeLanguageState } from "./languageType";
+import { TEmployeeLanguage } from "./languageType";
 
 const languageApiWithTag = apiSlice.enhanceEndpoints({
   addTagTypes: ["employeeLanguage"],

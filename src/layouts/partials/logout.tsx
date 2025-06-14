@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { signOut, useSession } from "next-auth/react";
 import { apiSlice } from "@/redux/features/apiSlice/apiSlice";
@@ -12,7 +11,6 @@ import { Button } from "@/components/ui/button"; // shadcn-ui
 import { useGetEmployeeQuery } from "@/redux/features/employeeApiSlice/employeeSlice";
 
 export default function LogoutButton() {
-  const router = useRouter();
   const dispatch = useDispatch();
   const { data: session } = useSession();
 
@@ -23,11 +21,7 @@ export default function LogoutButton() {
   };
 
   const userId = session?.user?.id;
-  const {
-    data: employeeData,
-    isLoading,
-    isError,
-  } = useGetEmployeeQuery(userId ?? "");
+  const { data: employeeData } = useGetEmployeeQuery(userId ?? "");
 
   return (
     <div className="pb-5">

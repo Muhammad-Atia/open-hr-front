@@ -31,11 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession();
 
   const userId = session?.user?.id;
-  const {
-    data: employeeData,
-    isLoading,
-    isError,
-  } = useGetEmployeeQuery(userId ?? "");
+  const { data: employeeData } = useGetEmployeeQuery(userId ?? "");
 
   // بيانات الإعدادات من الستور
   const { app_name, company_website, favicon_url } =

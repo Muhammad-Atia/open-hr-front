@@ -73,11 +73,7 @@ const Dashboard = () => {
 
   const { data: session } = useSession();
   const userId = session?.user?.id;
-  const {
-    data: employeeData,
-    isLoading,
-    isError,
-  } = useGetEmployeeQuery(userId ?? "");
+  const { data: employeeData, isLoading } = useGetEmployeeQuery(userId ?? "");
 
   // check module enabled or not
   const { modules = [] } = useAppSelector((state) => state["setting-slice"]);

@@ -29,31 +29,15 @@ import LeavePage from "./_components/leave-page";
 import { useSession } from "next-auth/react";
 
 const Leave = () => {
-  const { data: session } = useSession();
-  if (session?.user.role !== "admin") {
-    // إذا كان المستخدم ليس مديرًا، لا تعرض الصفحة
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <h1 className="text-2xl font-bold">Access Denied</h1>
-      </div>
-    );
-  }
+  // check module enabled or not
+  const { modules, leaves: leaveSetting } = useAppSelector(
+    (state) => state["setting-slice"]
+  );
   const searchParams = useSearchParams();
-  const { limit } = useAppSelector((state) => state.filter);
   const page = searchParams?.get("page");
   const year = searchParams?.get("year");
   const currentYear = new Date().getFullYear();
-
-  const getYears = (start_year: number, end_year: number) =>
-    Array.from({ length: end_year - start_year + 1 }, (_, i) =>
-      (start_year + i).toString()
-    );
-
-  // add new year data
-  const [addNewYearLeave] = useAddNewLeaveYearMutation();
-  useEffect(() => {
-    addNewYearLeave(currentYear);
-  }, [addNewYearLeave, currentYear]);
+  const { limit } = useAppSelector((state) => state.filter);
 
   // get all Data
   const { data } = useGetLeavesQuery({
@@ -70,11 +54,26 @@ const Leave = () => {
     },
     "local-leaves"
   );
+  // add new year data
+  const [addNewYearLeave] = useAddNewLeaveYearMutation();
+  useEffect(() => {
+    addNewYearLeave(currentYear);
+  }, [addNewYearLeave, currentYear]);
 
-  // check module enabled or not
-  const { modules, leaves: leaveSetting } = useAppSelector(
-    (state) => state["setting-slice"]
-  );
+  const { data: session } = useSession();
+  if (session?.user.role !== "admin") {
+    // إذا كان المستخدم ليس مديرًا، لا تعرض الصفحة
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">Access Denied</h1>
+      </div>
+    );
+  }
+
+  const getYears = (start_year: number, end_year: number) =>
+    Array.from({ length: end_year - start_year + 1 }, (_, i) =>
+      (start_year + i).toString()
+    );
 
   // leave type enabled or not
   const casualEnabled = leaveSetting.some((item) => item.name === "casual");

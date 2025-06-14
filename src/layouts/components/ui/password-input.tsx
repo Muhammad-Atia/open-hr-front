@@ -15,7 +15,7 @@ interface PasswordInputProps
 const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
   ({ className, isSuccess, ...rest }, ref) => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
-    const rtl = useAppSelector((state) => state["setting-slice"].rtl);
+    const rtl = useAppSelector((state) => state["language-slice"].result.rtl);
 
     const type = isVisible ? "text" : "password";
 
@@ -31,7 +31,9 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           type={type}
         />
         {isSuccess ? (
-          <Check className={`absolute top-1/2 -translate-y-1/2 text-success ${rtl ? "left-2" : "right-2"}`} />
+          <Check
+            className={`absolute top-1/2 -translate-y-1/2 text-success ${rtl ? "left-2" : "right-2"}`}
+          />
         ) : (
           <button
             type="button"

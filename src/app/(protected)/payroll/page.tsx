@@ -21,20 +21,13 @@ import PayrollPage from "./_components/payroll-page";
 import { useSession } from "next-auth/react";
 
 const Payroll = () => {
-  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const { isDialogOpen, onDialogChange } = useDialog();
   const { limit } = useAppSelector((state) => state.filter);
+  const { modules } = useAppSelector((state) => state["setting-slice"]);
+  const { data: session } = useSession();
   const page = searchParams?.get("page");
   const search = searchParams?.get("search");
-  if (session?.user.role !== "admin") {
-    // إذا كان المستخدم ليس مديرًا، لا تعرض الصفحة
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <h1 className="text-2xl font-bold">Access Denied</h1>
-      </div>
-    );
-  }
   // get all Data
   const { data } = useGetPayrollsQuery({
     page: page ? Number(page) : 1,
@@ -51,8 +44,16 @@ const Payroll = () => {
     "local-payrolls"
   );
 
+  if (session?.user.role !== "admin") {
+    // إذا كان المستخدم ليس مديرًا، لا تعرض الصفحة
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">Access Denied</h1>
+      </div>
+    );
+  }
+
   // check module enabled or not
-  const { modules } = useAppSelector((state) => state["setting-slice"]);
 
   if (!modules.find((mod) => mod.name === "payroll")?.enable) {
     return notFound();

@@ -1,9 +1,8 @@
 "use client";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { useAppDispatch } from "@/redux/hook";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { updateSetting } from "@/redux/features/settingApiSlice/settingSliceLocal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { UpdateEmployeeLanguage } from "@/redux/features/languageApiSlice/languageSliceLocal";
 

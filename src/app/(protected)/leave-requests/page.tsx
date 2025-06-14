@@ -19,21 +19,14 @@ import LeaveRequestPage from "./_components/leave-request-page";
 import { useSession } from "next-auth/react";
 
 const LeaveRequest = () => {
+  // get all Data
+
   const { data: session } = useSession();
-  if (session?.user.role !== "admin") {
-    // إذا كان المستخدم ليس مديرًا، لا تعرض الصفحة
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <h1 className="text-2xl font-bold">Access Denied</h1>
-      </div>
-    );
-  }
+
   const searchParams = useSearchParams();
   const { limit } = useAppSelector((state) => state.filter);
   const page = searchParams?.get("page");
   const search = searchParams?.get("search");
-
-  // get all Data
   const { data } = useGetLeaveRequestsQuery({
     page: page ? Number(page) : 1,
     limit: limit,
@@ -54,6 +47,15 @@ const LeaveRequest = () => {
   const { modules } = useAppSelector((state) => state["setting-slice"]);
   if (!modules.find((mod) => mod.name === "leave")?.enable) {
     return notFound();
+  }
+
+  if (session?.user.role !== "admin") {
+    // إذا كان المستخدم ليس مديرًا، لا تعرض الصفحة
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">Access Denied</h1>
+      </div>
+    );
   }
 
   return (

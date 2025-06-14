@@ -1,9 +1,6 @@
 import EditFrom from "@/partials/edit-from";
-import { UpdateEmployeeLanguage } from "@/redux/features/languageApiSlice/languageSliceLocal";
-import { TEmployeeLanguage } from "@/redux/features/languageApiSlice/languageType";
-import { updateSetting } from "@/redux/features/settingApiSlice/settingSliceLocal";
+
 import { TSetting } from "@/redux/features/settingApiSlice/settingType";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
 import { useTranslation } from "react-i18next";
@@ -19,8 +16,6 @@ export default function SettingConfigureForm({
   data,
   handleSubmit,
 }: SettingConfigureFormProps) {
-  const settings = useAppSelector((state) => state["setting-slice"]); // حسب اسم slice عندك
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   return (

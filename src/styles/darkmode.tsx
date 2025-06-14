@@ -47,7 +47,7 @@ import { Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes"; // مكتبة next-themes
 
 export default function DarkModeToggle({ lang = "ar" }) {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   // استخدم resolvedTheme لضمان التوافق مع النظام
   const isDarkMode = resolvedTheme === "dark";

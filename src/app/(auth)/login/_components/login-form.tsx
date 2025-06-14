@@ -10,10 +10,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { loginUser } from "./utils";
-import { useAppSelector } from "@/redux/hook";
 import { useTranslation } from "react-i18next";
-
-
 
 export default function LoginForm() {
   const { t } = useTranslation();
@@ -36,11 +33,8 @@ export default function LoginForm() {
     }
 
     setLoading(false);
-
-    
-  
   };
-    
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
@@ -92,7 +86,7 @@ export default function LoginForm() {
               <Loader2 className="size-4 ml-2 animate-spin" />
             </>
           ) : (
-             t("Login")
+            t("Login")
           )}
         </Button>
       </div>
